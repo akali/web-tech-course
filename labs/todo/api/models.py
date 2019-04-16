@@ -30,8 +30,7 @@ class Task(models.Model):
             'name': self.name,
             'created_at': self.created_at,
             'due_on': self.due_on,
-            'status': self.status,
-            'task_list': self.task_list,
+            'status': self.status
         }
         return obj
 

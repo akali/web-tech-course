@@ -7,7 +7,7 @@ from api.models import TaskList, Task
 
 
 def get_task_lists(request):
-    result = [TaskList.objects.all()]
+    result = TaskList.objects.all()
     result = [x.to_json() for x in result]
     return JsonResponse(result, safe=False)
 
@@ -17,7 +17,7 @@ def get_task_list(request, id):
 
 
 def get_tasks_of_task_list(request, id):
-    return JsonResponse([x.to_json for x in TaskList.objects.get(id=id).task_set], safe=False)
+    return JsonResponse([x.to_json() for x in TaskList.objects.get(id=id).task_set.all()], safe=False)
 
 
 def get_task(request, id):
