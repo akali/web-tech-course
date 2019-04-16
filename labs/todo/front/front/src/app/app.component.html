@@ -1,0 +1,25 @@
+<div class="root">
+  <div class="inner">
+    <div class="content">
+      <div class="task_list">
+        <div class="head">
+          Task Lists:
+        </div>
+        <table *ngFor="let item of taskLists">
+          <tr class="row" (click)="onTaskListClick(item)">
+            <td class="id">
+              {{item.id}}
+            </td>
+            <td>
+              {{item.name}}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tasks">
+        <app-tasks *ngIf="taskList" [taskList]="taskList"></app-tasks>
+      </div>
+    </div>
+  </div>
+</div>

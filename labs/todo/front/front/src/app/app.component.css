@@ -1,0 +1,48 @@
+.root {
+    font-size: 3em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.task_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.inner {
+    width: 860px;
+    display: flex;
+}
+
+.content {
+    border-radius: 5px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.row, tr {
+    background-color: #ddd;
+    color: #666;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+.id {
+    width: 20px;
+}
+
+.tasks {
+    /* margin-left: 160px; */
+    width: 30%;
+}

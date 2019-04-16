@@ -1,0 +1,37 @@
+<div class="root">
+  <div class="inner">
+    <div class="content">
+      <div class="task_list">
+        <div class="head">
+          Tasks:
+        </div>
+        <table *ngFor="let item of tasks">
+          <tr class="row" (click)="onTaskClick(item)">
+            <td class="id">
+              {{item.id}}
+            </td>
+            <td>
+              {{item.name}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    
+      <div *ngIf="task" class="task">
+        id: {{
+          this.task.id
+        }}
+        <br>
+        name: {{
+          this.task.name
+        }}
+        <br>
+        status: {{
+          this.task.status
+        }}
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+  

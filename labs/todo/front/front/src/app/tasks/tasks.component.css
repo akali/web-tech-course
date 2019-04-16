@@ -1,0 +1,48 @@
+.root {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.task_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.inner {
+    width: 860px;
+    display: flex;
+}
+
+.content {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.row, tr {
+    background-color: #ddd;
+    color: #666;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+.id {
+    width: 20px;
+}
+
+.tasks {
+    margin-left: 160px;
+}
+
+.task {
+    font-size: 0.5em;
+    width: 30%;
+}
