@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rest_framework import serializers
-from .models import Category, Item
+from .models import Category
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,20 +21,9 @@ class LikeSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     title = serializers.CharField(required=True)
 
-    def create(self, validated_data):
-        category = Category(**validated_data)
-        category.save()
-        return category
-
-    def update(self, instance, validated_data):
-        instance.body = validated_data.get('body', instance.body)
-        instance.save()
-        return instance
-
     class Meta:
         model = Category
-        fields = ('title')
-        # fields = '__all__'
+        fields = ('id',''title')
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -47,12 +36,21 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'price', 'post_date',)
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
+class LikeSerializer(serializers.ModelSerializer):
     item = ItemSerializer()
-    description = serializers.CharField(required=True)
-    post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
+    author = UserSerializer()
 
     class Meta:
-        model = Comment
-        fields = ('id', 'description', 'post_date',)
+        model = Like
+        fields = ('id',)
+
+
+class LikeIdSerializer(serializers.Serializer):
+    item_id = serializers.IntegerField()
+    author_id = serializers.IntegerField()
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
