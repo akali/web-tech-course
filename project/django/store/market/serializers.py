@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rest_framework import serializers
-from .models import Category, Item, Like
+from .models import Category, Item, Like, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,11 +55,16 @@ class LikeIdSerializer(serializers.Serializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
-    item = ItemSerializer()
-    description = serializers.CharField(required=True)
+    item_id = serializers.IntegerField()
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
     class Meta:
-        model = Item
-        fields = ('id', 'description', 'post_date',)
+        model = Comment
+        fields = ('id', 'description', 'post_date', 'item_id')
+
+    def create(self, validated_data):
+        print(validated_data)
+        item_id = validated_data.pop('item_id')
+        item = Item.objects.get(pk=item_id)
+        comment = Comment.objects.create(item=item, **validated_data)
+        return comment
