@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.views import APIView
-from store.market.models import Like
-from store.market.serializers import LikeSerializer, LikeIdSerializer
+from market.models import Like
+from market.serializers import LikeSerializer, LikeIdSerializer
 from rest_framework.response import Response
 
 

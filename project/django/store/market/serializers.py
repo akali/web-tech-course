@@ -37,15 +37,6 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ('id',)
 
 
-class LikeSerializer(serializers.ModelSerializer):
-    item = ItemSerializer()
-    author = UserSerializer()
-
-    class Meta:
-        model = Like
-        fields = ('id',)
-
-
 class LikeIdSerializer(serializers.Serializer):
     item_id = serializers.IntegerField()
     author_id = serializers.IntegerField()
@@ -55,3 +46,14 @@ class LikeIdSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
+    item = ItemSerializer()
+    description = serializers.CharField(required=True)
+    post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
+
+    class Meta:
+        model = Item
+        fields = ('id', 'description', 'post_date',)
