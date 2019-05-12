@@ -27,4 +27,4 @@ class Comment(models.Model):
     post_date = models.DateTimeField(auto_now=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    #parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='childs')
+    # parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='childs')
