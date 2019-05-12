@@ -11,3 +11,7 @@ urlpatterns = [
     path('like', views.like),
     path('comment', views.comment),
 ]
+
+
+
+
