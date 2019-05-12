@@ -8,17 +8,22 @@ import { ItemsComponent } from './component/market/items/items.component';
 import {ProviderService} from './shared/service/provider.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './shared/interceptor/AuthInterceptor';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import { PostComponent } from './component/market/post/post.component';
+import {AuthService} from './shared/service/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    ItemsComponent
+    ItemsComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     ProviderService,
@@ -26,7 +31,8 @@ import {AuthInterceptor} from './shared/interceptor/AuthInterceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    } as ClassProvider
+    } as ClassProvider,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
