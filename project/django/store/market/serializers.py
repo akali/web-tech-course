@@ -28,11 +28,12 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('title')
         # fields = '__all__'
 
-class ItamSerializer(serializers.ModelSerializer):
+
+class ItemSerializer(serializers.ModelSerializer):
     owner = UserSerializer()
     category = CategorySerializer()
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'description', 'price', 'post_date', )
+        fields = ('id', 'title', 'description', 'price', 'post_date',)
