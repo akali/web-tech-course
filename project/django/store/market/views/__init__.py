@@ -5,3 +5,4 @@ from .views import item
 from .views import item_detail
 from .views import like
 from .views import comment
+from .cbv_item import ItemApiView, ItemWithIdApiView
