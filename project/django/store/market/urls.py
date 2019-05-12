@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import views, cbv_item, auth
+from .views import views, cbv_item, auth, cbv_category, cbv_comment, cbv_like
 
 urlpatterns = [
     path('/', views.welcome_page),

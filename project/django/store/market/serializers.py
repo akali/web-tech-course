@@ -24,7 +24,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'description', 'price', 'post_date', 'category_id')
+        fields = ('id', 'title', 'description', 'price', 'post_date', 'likes_count', 'category_id',)
 
     def create(self, validated_data):
         print(validated_data)

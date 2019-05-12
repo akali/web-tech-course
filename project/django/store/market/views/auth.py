@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from store.market.serializers import UserSerializer
+from market.serializers import UserSerializer
 
 
 class UserList(generics.ListAPIView):
