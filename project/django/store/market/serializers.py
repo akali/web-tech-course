@@ -9,34 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email',)
 
-# class PostSerializer(serializers.Serializer):
-#     title = serializers.CharField(required=True)
-#     body = serializers.CharField(required=True)
-#     like_count = serializers.IntegerField()
-#     created_at = serializers.DateTimeField()
-#     created_by = UserSerializer(read_only=True)
-#
-#     def create(self, validated_data):
-#         post = Post(**validated_data)
-#         post.save()
-#         return post
-#
-#     def update(self, instance, validated_data):
-#         instance.body = validated_data.get('body', instance.body)
-#         instance.save()
-#         return instance
-#
-#
-# class PostSerializer2(serializers.ModelSerializer):
-#     title = serializers.CharField(required=True)
-#     body = serializers.CharField(required=True)
-#     like_count = serializers.IntegerField()
-#     created_at = serializers.DateTimeField()
-#     created_by = UserSerializer(read_only=True)
-#
-#     class Meta:
-#         model = Post
-#         fields = ('title', 'body', 'like_count', 'created_at', 'created_by')
-#         # fields = '__all__'
-#
-#
+
+class CategorySerializer(serializers.ModelSerializer):
+    title = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        category = Category(**validated_data)
+        category.save()
+        return category
+
+    def update(self, instance, validated_data):
+        instance.body = validated_data.get('body', instance.body)
+        instance.save()
+        return instance
+
+    class Meta:
+        model = Category
+        fields = ('title')
+        # fields = '__all__'
