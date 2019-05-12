@@ -1,0 +1,32 @@
+<div class="container">
+
+  <button (click)="onPostItemClick()" style="margin: 1em;" class="btn btn-primary">Post item</button>
+
+  <div class="row">
+    <ng-container *ngFor="let item of items">
+      <div class="card col-sm-4">
+        <img src="https://images-na.ssl-images-amazon.com/images/I/61%2BXkFYjMFL._SL1500_.jpg"
+             alt="glasses"
+             class="card-img-top">
+        <div class="card-body">
+          <p class="card-title">
+            {{ item.title }}
+          </p>
+          <p class="card-text">
+            {{ item.description }}
+          </p>
+          <p>{{item.price}}$</p>
+
+          <div class="d-flex align-items-center justify-content-between">
+            <button class="btn btn-primary" (click)="onItemClick(items[0])">Show</button>
+            <div>
+              {{item.like_count}}
+              <fa style="color:red;" name="heart"></fa>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

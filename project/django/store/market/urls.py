@@ -6,7 +6,7 @@ urlpatterns = [
     path('/', views.welcome_page),
     path('login/', auth.login),
     path('logout/', auth.logout),
-    path('category', views.category),
+    path('category', cbv_category.CategoryApi.as_view(), name='category'),
     path('category/<int:pk>', views.category_items),
     path('item', cbv_item.ItemApiView.as_view()),
     path('item/<int:pk>', cbv_item.ItemWithIdApiView.as_view()),
