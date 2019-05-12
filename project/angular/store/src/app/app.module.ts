@@ -11,6 +11,7 @@ import {AuthInterceptor} from './shared/interceptor/AuthInterceptor';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import { PostComponent } from './component/market/post/post.component';
 import {AuthService} from './shared/service/auth.service';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {AuthService} from './shared/service/auth.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    FormsModule
   ],
   providers: [
     ProviderService,
