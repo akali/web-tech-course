@@ -11,9 +11,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LikeSerializer(serializers.ModelSerializer):
-    item = serializers.ItemSerializer(read_only=True)
-    author = serializers.UserSerializer(read_only=True)
+    item = ItemSerializer()
+    author = UserSerializer()
 
     class Meta:
         model = Like
-        fields = ('author', 'item', )
+        fields = ('id',)
