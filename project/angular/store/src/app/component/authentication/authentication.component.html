@@ -1,3 +1,14 @@
-<p>
-  authentication works!
-</p>
+<div class="card-wrapper">
+
+  <div class="d-flex flex-column align-items-center justify-content-center">
+    <input class="form-control" type="text" [(ngModel)]="username" placeholder="login">
+    <input class="form-control" type="password" [(ngModel)]="password" placeholder="password">
+
+    <button (click)="authenticate(username, password)" class="btn btn-primary"> Login or register </button>
+
+    <p *ngIf="errors" style="color: red;">errors</p>
+
+  </div>
+
+</div>
+

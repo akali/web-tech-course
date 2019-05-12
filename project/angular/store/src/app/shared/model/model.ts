@@ -7,3 +7,17 @@ export interface Item {
   category: string;
   like_count: number;
 }
+
+export interface IAuthResponse {
+  token: string;
+}
+
+export interface Category {
+  title: string;
+}
+
+export interface Comment {
+  description: string;
+  post_date: Date;
+  author: string;
+}
