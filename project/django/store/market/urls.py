@@ -1,6 +1,6 @@
 from django.urls import path
 
-from market import views
+from .views import views
 
 urlpatterns = [
     path('/', views.welcome_page),
