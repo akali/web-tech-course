@@ -27,7 +27,8 @@ export class AuthenticationComponent implements OnInit {
 
   authenticate(username: string, password: string) {
     this.auth.authenticate(username, password).then(res => {
-      this.router.navigateByUrl('/items');
+      this.authenticated = true;
+      this.router.navigateByUrl('/');
     }).catch(err => {
       this.errors = err;
     });

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IAuthResponse, Item} from '../model/model';
+import {Category, IAuthResponse, Item} from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,11 @@ export class ProviderService extends MainService {
     return this.get(`${this.root}/api/item`, {}).then(res => res);
   }
 
-  post_item(item: Item): Promise<Item> {
+  public get_categories(): Promise<Category[]> {
+    return this.get(`${this.root}/api/category`, {});
+  }
+
+  post_item(item: any): Promise<Item> {
     return this.post(`${this.root}/api/item`, item).then(res => res);
   }
 
