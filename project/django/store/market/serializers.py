@@ -65,13 +65,3 @@ class LikeSerializer(serializers.ModelSerializer):
         item.save()
         like = Like.objects.create(item=item, **validated_data)
         return like
-
-
-# class LikeIdSerializer(serializers.Serializer):
-#     item_id = serializers.IntegerField()
-#
-#     def update(self, instance, validated_data):
-#         pass
-#
-#     def create(self, validated_data):
-#         pass
