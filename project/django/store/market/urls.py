@@ -10,8 +10,8 @@ urlpatterns = [
     path('category/<int:pk>', cbv_category.CategoryApi.as_view()),
     path('item', cbv_item.ItemApiView.as_view()),
     path('item/<int:pk>', cbv_item.ItemWithIdApiView.as_view()),
+    path('item/<int:pk>/comment', cbv_comment.CommentApiView.as_view()),
     path('like', cbv_like.LikeApiView.as_view()),
-    path('comment', cbv_comment.CommentApiView.as_view()),
 ]
 
 
