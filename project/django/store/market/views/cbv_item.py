@@ -11,6 +11,8 @@ from market.serializers import ItemSerializer
 
 def getOwner(request):
     token = request.headers.get('Authorization')
+    if token is None:
+        return None
     token = token.split(' ')[1]
     owner = Token.objects.get(key=token).user
     return owner
@@ -43,21 +45,35 @@ class ItemWithIdApiView(APIView):
     def get(self, request, pk):
         item = self.get_object(pk)
         serializer = ItemSerializer(item)
-        return Response(serializer.data)
+
+        my_or_not = False
+        item = self.get_object(pk)
+        owner = getOwner(request)
+
+        if owner is not None:
+            if item.owner.id == owner.id:
+                my_or_not = True
+
+        response_data = serializer.data
+        response_data['my_or_not'] = my_or_not
+
+        return Response(response_data)
 
     def put(self, request, pk):
         item = self.get_object(pk)
         serializer = ItemSerializer(instance=item, data=request.data)
         owner = getOwner(request)
-        if owner.id == item.owner.id:
-            if serializer.is_valid(raise_exception=True):
-                serializer.save(owner=owner)
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        if owner is not None:
+            if owner.id == item.owner.id:
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save(owner=owner)
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, pk):
         owner = getOwner(request)
         item = self.get_object(pk)
-        if owner.id == item.owner.id:
-            item.delete()
+        if owner is not None:
+            if owner.id == item.owner.id:
+                item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

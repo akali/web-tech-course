@@ -1,18 +1,29 @@
 export interface Item {
+  id?: number;
   title: string;
   description: string;
   price: number;
-  post_date: Date;
-  owner: string;
+  post_date?: Date;
+  owner?: string;
   category: string;
-  like_count: number;
+  likes_count?: number;
 }
+
+export const emptyItem = (): Item => {
+  return {
+    category: '',
+    description: '',
+    price: 0,
+    title: ''
+  };
+};
 
 export interface IAuthResponse {
   token: string;
 }
 
 export interface Category {
+  id: number;
   title: string;
 }
 

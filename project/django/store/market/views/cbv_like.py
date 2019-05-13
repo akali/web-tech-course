@@ -18,10 +18,16 @@ class LikeApiView(APIView):
     def post(self, request):
         serializer = LikeSerializer(data=request.data)
         author = getOwner(request)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(author=author)
-            return Response(serializer.data)
-        return Response(serializer.errors)
+        if serializer.is_valid():
+            item_id = serializer.validated_data.pop('item_id')
+            item = Item.objects.get(pk=item_id)
+            like = Like.objects.filter(item=item, author=author)
+            if like.count() == 0:
+                like = serializer.save(item_id=item_id, author=author)
+                return Response(like.as_dict())
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request):
         author = getOwner(request)
@@ -29,13 +35,13 @@ class LikeApiView(APIView):
         if serializer.is_valid():
             item_id = serializer.validated_data.pop('item_id')
             item = Item.objects.get(pk=item_id)
-            like = Like.objects.get(item=item, author=author)
-
-            if like is not None:
+            like = Like.objects.filter(item=item, author=author)
+            if like.count() != 0:
                 item.likes_count -= 1
                 item.save()
+                like = Like.objects.get(item=item, author=author)
                 like.delete()
                 return Response(like.as_dict())
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

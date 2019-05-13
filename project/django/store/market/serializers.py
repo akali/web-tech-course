@@ -38,7 +38,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'description', 'price', 'post_date', 'likes_count', 'category_id',)
+        fields = ('id', 'title', 'description', 'price', 'post_date', 'likes_count', 'category_id')
 
     def create(self, validated_data):
         print(validated_data)
@@ -49,19 +49,18 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    item_id = serializers.IntegerField()
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
     class Meta:
-        model = Item
-        fields = ('id', 'description', 'post_date', 'item_id')
+        model = Comment
+        fields = ('id', 'description', 'post_date')
 
-    def create(self, validated_data):
-        print(validated_data)
-        item_id = validated_data.pop('item_id')
-        item = Item.objects.get(pk=item_id)
-        comment = Comment.objects.create(item=item, **validated_data)
-        return comment
+    # def create(self, validated_data):
+    #     print(validated_data)
+    #     item_id = validated_data.pop('item_id')
+    #     item = Item.objects.get(pk=item_id)
+    #     comment = Comment.objects.create(item=item, **validated_data)
+    #     return comment
 
 
 class LikeSerializer(serializers.ModelSerializer):
@@ -79,13 +78,3 @@ class LikeSerializer(serializers.ModelSerializer):
         item.save()
         like = Like.objects.create(item=item, **validated_data)
         return like
-
-
-# class LikeIdSerializer(serializers.Serializer):
-#     item_id = serializers.IntegerField()
-#
-#     def update(self, instance, validated_data):
-#         pass
-#
-#     def create(self, validated_data):
-#         pass
