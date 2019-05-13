@@ -38,7 +38,7 @@ class CommentSerializer(serializers.ModelSerializer):
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
     class Meta:
-        model = Item
+        model = Comment
         fields = ('id', 'description', 'post_date')
 
     # def create(self, validated_data):
