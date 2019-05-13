@@ -1,7 +1,5 @@
 <div class="container">
 
-  <button (click)="onPostItemClick()" style="margin: 1em;" class="btn btn-primary">Post item</button>
-
   <div class="row">
     <ng-container *ngFor="let item of items">
       <div class="card col-sm-4">
@@ -19,10 +17,10 @@
 
           <div class="d-flex align-items-center justify-content-between">
             <button class="btn btn-primary" (click)="onItemClick(items[0])">Show</button>
-            <div>
-              {{item.like_count}}
+            <button class="btn btn-primary" style="display: flex;">
+              {{item.likes_count}}
               <fa style="color:red;" name="heart"></fa>
-            </div>
+            </button>
           </div>
 
         </div>

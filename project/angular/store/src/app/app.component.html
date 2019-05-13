@@ -1,6 +1,10 @@
-<nav *ngIf="authenticated" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="collapse navbar-collapse">
-    <button class="btn btn-light">Logout</button>
+    <div *ngIf="authenticated">
+      <button (click)="logout()" class="btn btn-light">Logout</button>
+      <button (click)="onPostItemClick()" style="margin: 1em;" class="btn btn-primary">Post item</button>
+    </div>
+    <button *ngIf="!authenticated" (click)="onLoginClick()" class="btn btn-light">Login</button>
   </div>
 </nav>
 <router-outlet></router-outlet>
