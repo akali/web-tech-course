@@ -3,7 +3,7 @@ from django.urls import path
 from .views import views, cbv_item, auth, cbv_category, cbv_comment, cbv_like
 
 urlpatterns = [
-    path('/', views.welcome_page),
+    path('', views.welcome_page),
     path('login/', auth.login),
     path('logout/', auth.logout),
     path('category', cbv_category.CategoriesApi.as_view(), name='category'),

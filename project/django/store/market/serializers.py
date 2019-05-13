@@ -10,12 +10,26 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email',)
 
 
-class CategorySerializer(serializers.ModelSerializer):
+# class CategorySerializer(serializers.ModelSerializer):
+#     title = serializers.CharField(required=True)
+#
+#     class Meta:
+#         model = Category
+#         fields = ('id', 'title',)
+
+
+class CategorySerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
 
-    class Meta:
-        model = Category
-        fields = ('id', 'title',)
+    def create(self, validated_data):
+        category = Category(**validated_data)
+        category.save()
+        return category
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.save()
+        return instance
 
 
 class ItemSerializer(serializers.ModelSerializer):
