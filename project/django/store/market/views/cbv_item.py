@@ -26,8 +26,8 @@ class ItemApiView(APIView):
         owner = getOwner(request)
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            task = serializer.save(owner=owner)
-            task.save()
+            item = serializer.save(owner=owner)
+            item.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

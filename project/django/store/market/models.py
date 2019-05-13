@@ -17,10 +17,21 @@ class Item(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')
 
+    def as_dict(self):
+        return {
+            'title': self.title
+        }
+
 
 class Like(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='likes')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+
+    def as_dict(self):
+        return {
+            'item': self.item.as_dict(),
+            'author': self.author.id
+        }
 
 
 class Comment(models.Model):

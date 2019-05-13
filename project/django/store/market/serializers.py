@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from rest_framework import serializers
-from .models import Category, Item, Like
+from .models import Category, Item, Like, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -34,32 +34,44 @@ class ItemSerializer(serializers.ModelSerializer):
         return item
 
 
-class LikeSerializer(serializers.ModelSerializer):
-    item = ItemSerializer()
-    author = UserSerializer()
-
-    class Meta:
-        model = Like
-        fields = ('id',)
-
-
-class LikeIdSerializer(serializers.Serializer):
-    item_id = serializers.IntegerField()
-    author_id = serializers.IntegerField()
-
-    def update(self, instance, validated_data):
-        pass
-
-    def create(self, validated_data):
-        pass
-
-
 class CommentSerializer(serializers.ModelSerializer):
-    author = UserSerializer()
-    item = ItemSerializer()
-    description = serializers.CharField(required=True)
+    item_id = serializers.IntegerField()
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
     class Meta:
         model = Item
-        fields = ('id', 'description', 'post_date',)
+        fields = ('id', 'description', 'post_date', 'item_id')
+
+    def create(self, validated_data):
+        print(validated_data)
+        item_id = validated_data.pop('item_id')
+        item = Item.objects.get(pk=item_id)
+        comment = Comment.objects.create(item=item, **validated_data)
+        return comment
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    item_id = serializers.IntegerField()
+
+    class Meta:
+        model = Like
+        fields = ('id', 'item_id')
+
+    def create(self, validated_data):
+        print(validated_data)
+        item_id = validated_data.pop('item_id')
+        item = Item.objects.get(pk=item_id)
+        item.likes_count += 1
+        item.save()
+        like = Like.objects.create(item=item, **validated_data)
+        return like
+
+
+# class LikeIdSerializer(serializers.Serializer):
+#     item_id = serializers.IntegerField()
+#
+#     def update(self, instance, validated_data):
+#         pass
+#
+#     def create(self, validated_data):
+#         pass
