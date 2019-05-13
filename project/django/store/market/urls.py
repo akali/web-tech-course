@@ -13,3 +13,7 @@ urlpatterns = [
     path('like', cbv_like.LikeApiView.as_view()),
     path('comment', cbv_comment.CommentApiView.as_view()),
 ]
+
+
+
+

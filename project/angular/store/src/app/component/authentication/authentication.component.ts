@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../shared/service/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-authentication',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthenticationComponent implements OnInit {
 
-  constructor() { }
+  authenticated = false;
+  username = '';
+  password = '';
+  errors: string = null;
 
-  ngOnInit() {
+  constructor(
+    private auth: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
   }
 
+  ngOnInit() {
+    this.authenticated = this.auth.authenticated();
+  }
+
+  authenticate(username: string, password: string) {
+    this.auth.authenticate(username, password).then(res => {
+      this.router.navigateByUrl('/items');
+    }).catch(err => {
+      this.errors = err;
+    });
+  }
 }
