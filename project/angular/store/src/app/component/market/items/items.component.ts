@@ -51,4 +51,13 @@ export class ItemsComponent implements OnInit {
       alert('looks like you have already liked this item');
     });
   }
+
+  getPictureURL(item: Item) {
+    if (item.picture == null) {
+      return 'https://images-na.ssl-images-amazon.com/images/I/61%2BXkFYjMFL._SL1500_.jpg';
+    } else {
+      console.log(item.picture);
+      return this.provider.get_picture_url(item.picture);
+    }
+  }
 }

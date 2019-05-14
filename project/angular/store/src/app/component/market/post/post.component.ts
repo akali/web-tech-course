@@ -12,6 +12,7 @@ export class PostComponent implements OnInit {
   item: Item = emptyItem();
   categories: Category[];
   currentCategory: Category;
+  private file: File;
 
   constructor(
     private api: ProviderService,
@@ -40,10 +41,27 @@ export class PostComponent implements OnInit {
     console.log(body);
     console.log(currentCategory);
 
-    this.api.post_item(body).then(res => {
+    const formData = new FormData();
+    formData.append('picture', this.file);
+
+    for (const val in body) {
+      if (body.hasOwnProperty(val)) {
+        formData.append(val, body[val]);
+      }
+    }
+
+    this.api.post_item(formData).then(res => {
       this.router.navigate(['/']);
     }).catch(error => {
       console.error(error);
     });
+  }
+
+  onFilePick($event: Event) {
+    const files = ($event.target as HTMLInputElement).files;
+    if (files.length > 0) {
+      const file = files[0];
+      this.file = file;
+    }
   }
 }

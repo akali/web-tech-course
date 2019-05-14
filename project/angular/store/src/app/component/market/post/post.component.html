@@ -23,6 +23,10 @@
             </div>
 
             <div class="form-group">
+              <input (change)="onFilePick($event)" type="file">
+            </div>
+
+            <div class="form-group">
               <input [(ngModel)]="item.price" type="number" class="form-control col-sm-4" placeholder="Price">
             </div>
 

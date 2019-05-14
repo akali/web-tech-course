@@ -67,4 +67,8 @@ export class ProviderService extends MainService {
       item_id: id
     });
   }
+
+  get_picture_url(picture: string): string {
+    return `${this.root}${picture}`;
+  }
 }

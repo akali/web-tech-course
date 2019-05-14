@@ -28,9 +28,9 @@ class LikeApiView(APIView):
                 if like.count() == 0:
                     like = serializer.save(item_id=item_id, author=author)
                     return Response(like.as_dict())
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request):
         author = getOwner(request)
@@ -46,6 +46,6 @@ class LikeApiView(APIView):
                     like = Like.objects.get(item=item, author=author)
                     like.delete()
                     return Response(like.as_dict())
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

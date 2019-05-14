@@ -9,6 +9,7 @@ export interface Item {
   category: string;
   likes_count?: number;
   my_or_not?: boolean;
+  picture?: string;
 }
 
 export const emptyItem = (): Item => {
