@@ -28,7 +28,11 @@ export class ItemsComponent implements OnInit {
     });
   }
 
-  onItemClick(item: Item) { }
+  onItemClick(item: Item) {
+    this.router.navigate([`${item.id}`], {
+      relativeTo: this.route
+    });
+  }
 
   onPostItemClick() {
     this.router.navigateByUrl('/post-item');

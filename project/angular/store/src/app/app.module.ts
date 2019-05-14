@@ -12,13 +12,15 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import { PostComponent } from './component/market/post/post.component';
 import {AuthService} from './shared/service/auth.service';
 import {FormsModule} from '@angular/forms';
+import { DetailComponent } from './component/market/items/detail/detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
     ItemsComponent,
-    PostComponent
+    PostComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

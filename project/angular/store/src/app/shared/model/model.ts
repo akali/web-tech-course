@@ -29,6 +29,6 @@ export interface Category {
 
 export interface Comment {
   description: string;
-  post_date: Date;
-  author: string;
+  post_date?: Date;
+  author?: string;
 }
