@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {Category, IAuthResponse, Item} from '../model/model';
+import {Category, Comment, IAuthResponse, Item} from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,11 @@ export class ProviderService extends MainService {
   }
 
   get_comments(id: number): Promise<Comment[]> {
-    return this.get(`${this.root}/api/comment/${id}`, {}).then(res => res);
+    return this.get(`${this.root}/api/item/${id}/comment`, {}).then(res => res);
+  }
+
+  put_comment(id: number, comment: Comment): Promise<Comment> {
+    return this.post(`${this.root}/api/item/${id}/comment`, comment);
   }
 
   login(login: string, pass: string): Promise<IAuthResponse> {

@@ -2,7 +2,7 @@
 
   <div class="row">
     <ng-container *ngFor="let item of items">
-      <div class="card col-sm-4">
+      <div class="card col-sm-3">
         <img src="https://images-na.ssl-images-amazon.com/images/I/61%2BXkFYjMFL._SL1500_.jpg"
              alt="glasses"
              class="card-img-top">
@@ -16,7 +16,7 @@
           <p>{{item.price}}$</p>
 
           <div class="d-flex align-items-center justify-content-between">
-            <button class="btn btn-primary" (click)="onItemClick(items[0])">Show</button>
+            <button class="btn btn-primary" (click)="onItemClick(item)">Show</button>
             <button class="btn btn-primary" style="display: flex;">
               {{item.likes_count}}
               <fa style="color:red;" name="heart"></fa>

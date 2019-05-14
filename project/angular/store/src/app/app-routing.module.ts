@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {PostComponent} from './component/market/post/post.component';
-import {AppComponent} from './app.component';
 import {ItemsComponent} from './component/market/items/items.component';
 import {AuthenticationComponent} from './component/authentication/authentication.component';
+import {DetailComponent} from './component/market/items/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -15,8 +15,17 @@ const routes: Routes = [
     component: AuthenticationComponent
   },
   {
-    path: '',
+    path: 'items',
     component: ItemsComponent
+  },
+  {
+    path: 'items/:id',
+    component: DetailComponent
+  },
+  {
+    path: '',
+    redirectTo: '/items',
+    pathMatch: 'full'
   }
 ];
 
@@ -24,4 +33,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
