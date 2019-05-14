@@ -10,16 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email',)
 
 
-# class CategorySerializer(serializers.ModelSerializer):
-#     title = serializers.CharField(required=True)
-#
-#     class Meta:
-#         model = Category
-#         fields = ('id', 'title',)
-
-
 class CategorySerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
+    id = serializers.IntegerField()
 
     def create(self, validated_data):
         category = Category(**validated_data)
@@ -28,6 +21,21 @@ class CategorySerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
+        instance.save()
+        return instance
+
+
+class CommentSerializer(serializers.Serializer):
+    description = serializers.CharField()
+    post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
+
+    def create(self, validated_data):
+        comment = Comment(**validated_data)
+        comment.save()
+        return comment
+
+    def update(self, instance, validated_data):
+        instance.description = validated_data.get('description', instance.description)
         instance.save()
         return instance
 
@@ -46,21 +54,6 @@ class ItemSerializer(serializers.ModelSerializer):
         category = Category.objects.get(pk=category_id)
         item = Item.objects.create(category=category, **validated_data)
         return item
-
-
-class CommentSerializer(serializers.Serializer):
-    description = serializers.CharField()
-    post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
-
-    def create(self, validated_data):
-        comment = Comment(**validated_data)
-        comment.save()
-        return comment
-
-    def update(self, instance, validated_data):
-        instance.description = validated_data.get('description', instance.description)
-        instance.save()
-        return instance
 
 
 class LikeSerializer(serializers.ModelSerializer):

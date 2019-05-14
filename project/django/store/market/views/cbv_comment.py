@@ -10,6 +10,8 @@ from market.serializers import CommentSerializer
 
 def getOwner(request):
     token = request.headers.get('Authorization')
+    if token is None:
+        return None
     token = token.split(' ')[1]
     owner = Token.objects.get(key=token).user
     return owner
@@ -32,8 +34,9 @@ class CommentApiView(APIView):
         owner = getOwner(request)
         serializer = CommentSerializer(data=request.data)
         item = self.get_object(pk)
-        if serializer.is_valid(raise_exception=True):
-            comment = serializer.save(author=owner, item=item)
-            comment.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        if owner is not None:
+            if serializer.is_valid(raise_exception=True):
+                comment = serializer.save(author=owner, item=item)
+                comment.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

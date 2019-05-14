@@ -27,11 +27,12 @@ class ItemApiView(APIView):
     def post(self, request):
         owner = getOwner(request)
         serializer = ItemSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            item = serializer.save(owner=owner)
-            item.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        if owner is not None:
+            if serializer.is_valid(raise_exception=True):
+                item = serializer.save(owner=owner)
+                item.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ItemWithIdApiView(APIView):
