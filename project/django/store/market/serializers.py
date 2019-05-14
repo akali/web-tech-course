@@ -34,19 +34,19 @@ class ItemSerializer(serializers.ModelSerializer):
         return item
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.Serializer):
+    description = serializers.CharField()
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
 
-    class Meta:
-        model = Comment
-        fields = ('id', 'description', 'post_date')
+    def create(self, validated_data):
+        comment = Comment(**validated_data)
+        comment.save()
+        return comment
 
-    # def create(self, validated_data):
-    #     print(validated_data)
-    #     item_id = validated_data.pop('item_id')
-    #     item = Item.objects.get(pk=item_id)
-    #     comment = Comment.objects.create(item=item, **validated_data)
-    #     return comment
+    def update(self, instance, validated_data):
+        instance.description = validated_data.get('description', instance.description)
+        instance.save()
+        return instance
 
 
 class LikeSerializer(serializers.ModelSerializer):
