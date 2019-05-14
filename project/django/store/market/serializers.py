@@ -40,6 +40,12 @@ class CommentSerializer(serializers.Serializer):
         return instance
 
 
+class CommentResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('description', 'post_date', 'author')
+
+
 class ItemSerializer(serializers.ModelSerializer):
     post_date = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", required=False)
     category_id = serializers.IntegerField()

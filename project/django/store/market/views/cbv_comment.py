@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework import status, generics
 from rest_framework.authtoken.models import Token
@@ -5,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from market.models import Comment, Item
-from market.serializers import CommentSerializer
+from market.serializers import CommentSerializer, CommentResponseSerializer
 
 
 def getOwner(request):
@@ -27,8 +28,18 @@ class CommentApiView(APIView):
     def get(self, request, pk):
         item = self.get_object(pk)
         comments = item.comments
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        serializer = CommentResponseSerializer(comments, many=True)
+
+        response_data = [
+            {
+                **data,
+                **{
+                    'author': User.objects.get(pk=data['author']).username
+                }
+            } for data in serializer.data
+        ]
+
+        return Response(response_data)
 
     def post(self, request, pk):
         owner = getOwner(request)
