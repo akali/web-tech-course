@@ -1,4 +1,5 @@
 export interface Item {
+  category_id?: number;
   id?: number;
   title: string;
   description: string;
@@ -7,6 +8,7 @@ export interface Item {
   owner?: string;
   category: string;
   likes_count?: number;
+  my_or_not?: boolean;
 }
 
 export const emptyItem = (): Item => {

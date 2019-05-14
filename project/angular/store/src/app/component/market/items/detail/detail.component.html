@@ -4,7 +4,7 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body">
-          <div *ngIf="item">
+          <div *ngIf="item && currentCategory">
 
             <div class="form-group">
               <label for="titleId">Title</label>
@@ -38,11 +38,18 @@
             </div>
 
             <div class="form-group">
-              <select
-                class="form-control">
-                <option [ngValue]="item.category">
+              <label> Category</label>
+              <select *ngIf="editing" class="form-control" [(ngModel)]="currentCategory">
+                <option *ngFor="let category of categories">
+                  {{category.title}}
                 </option>
               </select>
+              <input
+                readonly
+                *ngIf="!editing"
+                [value]="currentCategory.title"
+                type="text"
+                class="form-control col-sm-4">
             </div>
 
             <div class="form-group d-flex justify-content-around col-sm-4">
@@ -51,7 +58,7 @@
                 Back
               </button>
 
-              <button *ngIf="!editing" (click)="edit(item)" class="btn btn-info">
+              <button *ngIf="!editing && item.my_or_not" (click)="edit(item)" class="btn btn-info">
                 <fa name="pencil"></fa>
                 Edit
               </button>
@@ -64,7 +71,7 @@
                 Save
               </button>
 
-              <button (click)="delete(item)" class="btn btn-danger">
+              <button *ngIf="item.my_or_not" (click)="delete(item)" class="btn btn-danger">
                 <fa name="trash"></fa>
                 Delete
               </button>
@@ -77,7 +84,7 @@
               <div class="card">
                 <div class="card-header">
                   <div class="d-flex align-content-around justify-content-between">
-                    <b>Zhanel</b>
+                    <b>{{comment.author}}</b>
                     <b>{{comment.post_date}}</b>
                   </div>
                 </div>
@@ -92,7 +99,7 @@
               <div class="card">
                 <div class="card-header">
                   <div class="d-flex align-content-around justify-content-between">
-                    <b>Aisultan</b>
+                    <b></b>
                     <b>today</b>
                   </div>
                 </div>

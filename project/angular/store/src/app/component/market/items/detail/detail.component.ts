@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProviderService} from '../../../../shared/service/provider.service';
-import {Comment, Item} from '../../../../shared/model/model';
+import {Category, Comment, Item} from '../../../../shared/model/model';
 
 @Component({
   selector: 'app-detail',
@@ -12,6 +12,8 @@ export class DetailComponent implements OnInit {
 
   itemId: string;
   editing = false;
+  categories: Category[];
+  currentCategory: Category;
   private item: Item;
   private comments: Comment[];
   private commentBody: string;
@@ -26,14 +28,22 @@ export class DetailComponent implements OnInit {
   ngOnInit() {
     this.itemId = this.route.snapshot.paramMap.get('id');
     this.api.get_item(Number(this.itemId)).then(item => {
+      console.log(item);
       this.item = item;
+      this.fetchCategories();
     }).catch(error => console.log(error));
+    this.fetchComments();
+  }
 
-    this.api.get_comments(Number(this.itemId)).then(comments => {
-      console.log(comments);
-      this.comments = comments;
-    }).catch(error => {
-      console.log(error);
+  fetchCategories() {
+    this.api.get_categories().then(categories => {
+      console.log(categories);
+      this.categories = categories;
+      this.currentCategory = this.categories.filter(category => {
+        return category.id === this.item.category_id;
+      })[0];
+    }).catch(err => {
+      console.error(err);
     });
   }
 
@@ -57,7 +67,7 @@ export class DetailComponent implements OnInit {
     this.api.put_comment(Number(this.itemId), {
       description: this.commentBody
     }).then(resp => {
-      this.comments.push(resp);
+      this.fetchComments();
     }).catch(error => {
       console.log(error);
     });
@@ -72,8 +82,26 @@ export class DetailComponent implements OnInit {
   }
 
   onSaveClick() {
+    this.item.category_id = this.currentCategory.id;
+    console.log(this.currentCategory);
     this.api.update_item(this.item.id, this.item).then(response => {
       this.editing = false;
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  onSelectChange($event: Event) {
+    console.log($event);
+  }
+
+  private fetchComments() {
+    this.api.get_comments(Number(this.itemId)).then(comments => {
+      console.log(comments);
+      this.comments = null;
+      setTimeout(() => {
+        this.comments = comments;
+      }, 200);
     }).catch(error => {
       console.log(error);
     });

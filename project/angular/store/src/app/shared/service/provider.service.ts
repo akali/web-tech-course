@@ -9,16 +9,6 @@ import {Category, Comment, IAuthResponse, Item} from '../model/model';
 export class ProviderService extends MainService {
   private root = `http://localhost:8000`;
 
-  /*
-  api:
-    path('category', cbv_category.CategoryApi.as_view(), name='category'),
-    path('category/<int:pk>', views.category_items),
-    path('item', cbv_item.ItemApiView.as_view()),
-    path('item/<int:pk>', cbv_item.ItemWithIdApiView.as_view()),
-    path('like', views.like),
-    path('comment', views.comment),
-   */
-
   constructor(protected http: HttpClient) {
     super(http);
   }
@@ -55,6 +45,12 @@ export class ProviderService extends MainService {
     return this.post(`${this.root}/api/item/${id}/comment`, comment);
   }
 
+  put_like(id: number): Promise<any> {
+    return this.post(`${this.root}/api/like`, {
+      item_id: `${id}`
+    });
+  }
+
   login(login: string, pass: string): Promise<IAuthResponse> {
     return this.post(`${this.root}/api/login/`, {
       username: login,
@@ -64,5 +60,11 @@ export class ProviderService extends MainService {
 
   logout(): Promise<any> {
     return this.post(`${this.root}/api/logout/`, {});
+  }
+
+  delete_like(id: number) {
+    return this.delete(`${this.root}/api/like`, {
+      item_id: id
+    });
   }
 }

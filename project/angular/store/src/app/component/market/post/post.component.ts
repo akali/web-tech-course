@@ -29,15 +29,16 @@ export class PostComponent implements OnInit {
     });
   }
 
-  onSelectChange($event: Event) {
-    console.log($event);
+  onSelectChange(value: any) {
+    console.log(value);
   }
 
   postIt(item: Item, currentCategory: Category) {
-    console.log(item);
-
     const body: any = item;
     body.category_id = currentCategory.id;
+
+    console.log(body);
+    console.log(currentCategory);
 
     this.api.post_item(body).then(res => {
       this.router.navigate(['/']);
