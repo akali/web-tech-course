@@ -2,6 +2,17 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class ItemManager(models.Manager):
+    def for_user_order_by_title(self, user):
+        return self.filter(created_by=user).order_by('title')
+
+    def get_queryset(self):
+        return super().get_queryset().filter('title')
+
+    def get_price(self):
+        return super().get_price().filter('price')
+
+
 class Category(models.Model):
     title = models.CharField(max_length=256)
 
@@ -16,6 +27,9 @@ class Item(models.Model):
     likes_count = models.IntegerField(default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')
+
+    objects = models.Manager()
+    item_objects = ItemManager()
 
     def as_dict(self):
         return {
