@@ -24,6 +24,8 @@ class Item(models.Model):
     price = models.IntegerField()
     post_date = models.DateTimeField(auto_now=True)
 
+    picture = models.ImageField(null=True, default=None)
+
     likes_count = models.IntegerField(default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='items')

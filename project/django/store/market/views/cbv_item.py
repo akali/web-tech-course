@@ -28,7 +28,7 @@ class ItemApiView(APIView):
         owner = getOwner(request)
         serializer = ItemSerializer(data=request.data)
         if owner is not None:
-            if serializer.is_valid(raise_exception=True):
+            if serializer.is_valid():
                 item = serializer.save(owner=owner)
                 item.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)

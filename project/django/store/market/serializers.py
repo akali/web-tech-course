@@ -52,7 +52,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'description', 'price', 'post_date', 'likes_count', 'category_id')
+        fields = ('id', 'title', 'description', 'price', 'post_date', 'likes_count', 'category_id', 'picture')
 
     def create(self, validated_data):
         print(validated_data)
