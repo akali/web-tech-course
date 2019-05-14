@@ -32,4 +32,8 @@ export class AppComponent implements OnInit {
   onLoginClick() {
     this.router.navigate(['/login']);
   }
+
+  isAuthenticated() {
+    return this.auth.authenticated();
+  }
 }
