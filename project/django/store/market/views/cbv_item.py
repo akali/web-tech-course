@@ -43,6 +43,7 @@ class ItemsOfCategory(APIView):
             raise Http404
 
     def get(self, request, pk):
+        print(pk)
         category = self.get_object(pk)
         items = category.items.all()
         serializer = ItemSerializer(items, many=True)
