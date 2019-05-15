@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProviderService} from '../../../../shared/service/provider.service';
 import {Category, Comment, Item} from '../../../../shared/model/model';
+import {AuthService} from '../../../../shared/service/auth.service';
 
 @Component({
   selector: 'app-detail',
@@ -17,20 +18,16 @@ export class DetailComponent implements OnInit {
   private item: Item;
   private comments: Comment[];
   private commentBody: string;
-  authent = true;
 
   constructor(
     private api: ProviderService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authenticationService: AuthService
   ) {
   }
 
   ngOnInit() {
-
-    if (localStorage.token == null) {
-      this.authent = false;
-    }
 
     this.itemId = this.route.snapshot.paramMap.get('id');
     this.api.get_item(Number(this.itemId)).then(item => {
@@ -111,5 +108,9 @@ export class DetailComponent implements OnInit {
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  isAuthenticated() {
+    return this.authenticationService.authenticated();
   }
 }

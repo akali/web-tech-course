@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ItemsComponent implements OnInit {
 
   private items: Item[];
-  private category: Category;
+  private filterCategory: Category;
   private categories: Category[];
 
   constructor(
@@ -24,8 +24,9 @@ export class ItemsComponent implements OnInit {
   ngOnInit() {
     this.provider.get_categories().then(categories => {
       this.categories = categories;
+      this.filterCategory = this.categories[0];
     });
-    this.category = null;
+    this.filterCategory = null;
     this.provider.get_items().then(items => {
       console.log(items);
       this.items = items;
@@ -35,9 +36,10 @@ export class ItemsComponent implements OnInit {
   }
 
   onCategoryClick(category: Category) {
-    this.category = category;
+    this.filterCategory = category;
     this.provider.get_items_category(category).then(items => {
       this.items = items;
+      console.log(items);
     });
   }
 

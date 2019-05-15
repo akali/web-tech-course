@@ -1,48 +1,64 @@
 <div>
-
-    <div class="container">
-<!--      this is for title of current category-->
-      <div *ngIf="category">
-        {{category.title}}
-      </div>
-
+    <div class="container-fluid">
       <div class="row">
-        <ng-container *ngFor="let item of items">
-          <div class="card col-sm-3">
-            <img src="{{ getPictureURL(item) }}"
-                 alt="glasses"
-                 class="card-img-top">
-            <div class="card-body">
-              <p class="card-title">
-                {{ item.title }}
-              </p>
-              <p class="card-text">
-                {{ item.description }}
-              </p>
-              <p>{{item.price}}$</p>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-7">
+          <!--      this is for title of current category-->
+          <div *ngIf="filterCategory">
+            <h1>
+              {{filterCategory.title}}
+            </h1>
+          </div>
 
-              <div class="d-flex align-items-center justify-content-between">
-                <button class="btn btn-primary" (click)="onItemClick(item)">Show</button>
-                <button (click)="onLikeClick(item)" class="btn btn-primary" style="display: flex;">
-                  {{item.likes_count}}
-                  <fa style="color:red;" name="heart"></fa>
-                </button>
+          <div class="row">
+            <ng-container *ngFor="let item of items">
+              <div class="card col-sm-3">
+                <img src="{{ getPictureURL(item) }}"
+                     alt="glasses"
+                     class="card-img-top">
+                <div class="card-body">
+                  <p class="card-title">
+                    {{ item.title }}
+                  </p>
+                  <p class="card-text">
+                    {{ item.description }}
+                  </p>
+                  <p>{{item.price}}$</p>
+
+                  <div class="d-flex align-items-center justify-content-between">
+                    <button class="btn btn-primary" (click)="onItemClick(item)">Show</button>
+                    <button (click)="onLikeClick(item)" class="btn btn-primary" style="display: flex;">
+                      {{item.likes_count}}
+                      <fa style="color:red;" name="heart"></fa>
+                    </button>
+                  </div>
+
+                </div>
               </div>
-
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              Categories:
+              <div class="d-flex flex-row">
+                <div *ngFor="let category of categories">
+                  <div (click)="onCategoryClick(category)">
+                    <button
+                      class="btn"
+                      [class.btn-light]="category !== this.filterCategory"
+                      [class.btn-dark]="category === this.filterCategory"
+                    >
+                      {{category.title}}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </ng-container>
-      </div>
-  </div>
-
-<!--  this is div of categoties-->
-  <div>
-    CATEGORIES:
-    <div *ngFor="let category of categories">
-      <div (click)="onCategoryClick(category)">
-        {{category.title}}
+        </div>
       </div>
     </div>
-  </div>
 
 </div>
