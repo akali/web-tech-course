@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from market.models import Item
+from market.models import Item, Category
 from market.serializers import ItemSerializer
 
 
@@ -33,6 +33,20 @@ class ItemApiView(APIView):
                 item.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ItemsOfCategory(APIView):
+    def get_object(self, pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        category = self.get_object(pk)
+        items = category.items.all()
+        serializer = ItemSerializer(items, many=True)
+        return Response(serializer.data)
 
 
 class ItemWithIdApiView(APIView):
