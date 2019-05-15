@@ -55,15 +55,15 @@ export class ItemsComponent implements OnInit {
 
   onLikeClick(item: Item) {
     this.provider.put_like(item.id).then(resp => {
-      item.likes_count++;
+      item.likes_count = resp.like_count;
     }).catch(error => {
-      this.provider.delete_like(item.id).then(resp => {
-        item.likes_count--;
-      }).catch(error2 => {
-        console.log(error);
-      });
+      // this.provider.delete_like(item.id).then(resp => {
+      //   item.likes_count--;
+      // }).catch(error2 => {
+      //   console.log(error);
+      // });
       console.log(error);
-      alert('looks like you have already liked this item');
+      // alert('looks like you have already liked this item');
     });
   }
 

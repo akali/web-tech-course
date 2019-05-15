@@ -35,3 +35,7 @@ export interface Comment {
   post_date?: Date;
   author?: string;
 }
+
+export interface LikeResponse {
+  like_count: number;
+}

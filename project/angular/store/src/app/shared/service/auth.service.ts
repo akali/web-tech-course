@@ -22,4 +22,9 @@ export class AuthService {
       return res;
     });
   }
+
+  logout() {
+    localStorage.clear();
+    this.provider.logout();
+  }
 }

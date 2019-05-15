@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {Category, Comment, IAuthResponse, Item} from '../model/model';
+import {Category, Comment, IAuthResponse, Item, LikeResponse} from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class ProviderService extends MainService {
     return this.post(`${this.root}/api/item/${id}/comment`, comment);
   }
 
-  put_like(id: number): Promise<any> {
+  put_like(id: number): Promise<LikeResponse> {
     return this.post(`${this.root}/api/like`, {
       item_id: `${id}`
     });

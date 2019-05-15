@@ -9,7 +9,6 @@ import {Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'store';
-  private authenticated = false;
 
   constructor(
     private auth: AuthService,
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticated = this.auth.authenticated();
   }
 
   onPostItemClick() {
@@ -25,8 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    this.authenticated = false;
+    this.auth.logout();
   }
 
   onLoginClick() {

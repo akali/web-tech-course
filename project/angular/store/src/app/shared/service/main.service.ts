@@ -25,7 +25,7 @@ export class MainService {
 
   delete(uri: string, body: any): Promise<any> {
     body = this.normalBody(body);
-    return this.http.delete(uri, body).toPromise().then(res => res);
+    return this.http.request('delete', uri, body).toPromise().then(res => res);
   }
 
   put(uri: string, body: any): Promise<any> {

@@ -30,8 +30,12 @@ export class PostComponent implements OnInit {
     });
   }
 
-  onSelectChange(value: any) {
+  onSelectChange(value: Event) {
     console.log(value);
+    this.currentCategory = this.categories.filter(category => {
+      return category.title === (value.target as HTMLSelectElement).value;
+    })[0];
+    console.log(this.currentCategory);
   }
 
   postIt(item: Item, currentCategory: Category) {
