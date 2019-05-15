@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from market.models import Item, Category
-from market.serializers import ItemSerializer
+from market.serializers import ItemSerializer, ItemPutSerializer
 
 
 def getOwner(request):
@@ -77,14 +77,15 @@ class ItemWithIdApiView(APIView):
 
     def put(self, request, pk):
         item = self.get_object(pk)
-        serializer = ItemSerializer(instance=item, data=request.data)
+        serializer = ItemPutSerializer(instance=item, data=request.data)
         owner = getOwner(request)
         if owner is not None:
             if owner.id == item.owner.id:
-                if serializer.is_valid(raise_exception=True):
+                if serializer.is_valid():
                     serializer.save(owner=owner)
                     return Response(serializer.data)
                 return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'errors': 'not allowd'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     def delete(self, request, pk):
         owner = getOwner(request)

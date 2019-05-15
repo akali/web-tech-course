@@ -62,6 +62,21 @@ class ItemSerializer(serializers.ModelSerializer):
         return item
 
 
+class ItemPutSerializer(serializers.ModelSerializer):
+    category_id = serializers.IntegerField()
+
+    class Meta:
+        model = Item
+        fields = ('id', 'title', 'description', 'price', 'category_id')
+
+    def create(self, validated_data):
+        print(validated_data)
+        category_id = validated_data.pop('category_id')
+        category = Category.objects.get(pk=category_id)
+        item = Item.objects.create(category=category, **validated_data)
+        return item
+
+
 class LikeSerializer(serializers.ModelSerializer):
     item_id = serializers.IntegerField()
 
