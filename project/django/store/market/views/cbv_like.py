@@ -38,6 +38,9 @@ class LikeApiView(APIView):
                 })
             else:
                 return Response(serializer.error_messages, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({
+            'errors': 'not allowed'
+        }, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def delete(self, request):
         author = getOwner(request)
