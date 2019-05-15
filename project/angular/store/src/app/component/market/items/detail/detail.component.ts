@@ -94,8 +94,12 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  onSelectChange($event: Event) {
-    console.log($event);
+  onSelectChange(value: Event) {
+    console.log(value);
+    this.currentCategory = this.categories.filter(category => {
+      return category.title === (value.target as HTMLSelectElement).value;
+    })[0];
+    console.log(this.currentCategory);
   }
 
   private fetchComments() {
@@ -112,5 +116,9 @@ export class DetailComponent implements OnInit {
 
   isAuthenticated() {
     return this.authenticationService.authenticated();
+  }
+
+  getPictureUrl(item: Item) {
+    return this.api.get_picture_url(item.picture);
   }
 }

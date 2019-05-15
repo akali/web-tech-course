@@ -5,51 +5,54 @@
       <div class="card">
         <div class="card-body">
           <div *ngIf="item && currentCategory">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="titleId">Title</label>
+                  <input
+                    id="titleId"
+                    [readOnly]="!editing"
+                    [(ngModel)]="item.title"
+                    type="text"
+                    class="form-control" placeholder="Title">
+                </div>
 
-            <div class="form-group">
-              <label for="titleId">Title</label>
-              <input
-                id="titleId"
-                [readOnly]="!editing"
-                [(ngModel)]="item.title"
-                type="text"
-                class="form-control col-sm-4" placeholder="Title">
-            </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Description</label>
+                  <textarea
+                    [readOnly]="!editing"
+                    [(ngModel)]="item.description"
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"></textarea>
+                </div>
 
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description</label>
-              <textarea
-                [readOnly]="!editing"
-                [(ngModel)]="item.description"
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="priceId">Price</label>
-              <input
-                [readOnly]="!editing"
-                id="priceId"
-                [(ngModel)]="item.price"
-                type="number"
-                class="form-control col-sm-4"
-                placeholder="Price">
-            </div>
-
-            <div class="form-group">
-              <label> Category</label>
-              <select *ngIf="editing" class="form-control" [(ngModel)]="currentCategory">
-                <option *ngFor="let category of categories">
-                  {{category.title}}
-                </option>
-              </select>
-              <input
-                readonly
-                *ngIf="!editing"
-                [value]="currentCategory.title"
-                type="text"
-                class="form-control col-sm-4">
+                <div class="form-group">
+                  <label for="priceId">Price</label>
+                  <input
+                    [readOnly]="!editing"
+                    id="priceId"
+                    [(ngModel)]="item.price"
+                    type="number"
+                    class="form-control"
+                    placeholder="Price">
+                </div>
+                <div class="form-group">
+                  <label> Category</label>
+                  <select *ngIf="editing" class="form-control" (change)="onSelectChange($event)">
+                    <option *ngFor="let category of categories">
+                      {{category.title}}
+                    </option>
+                  </select>
+                  <input
+                    readonly
+                    *ngIf="!editing"
+                    [value]="currentCategory.title"
+                    type="text"
+                    class="form-control">
+                </div>
+              </div>
+              <img class="img col-sm-6" src="{{getPictureUrl(item)}}" alt="Item picture">
             </div>
 
             <div class="form-group d-flex justify-content-around col-sm-4">

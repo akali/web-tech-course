@@ -33,4 +33,8 @@ export class AppComponent implements OnInit {
   isAuthenticated() {
     return this.auth.authenticated();
   }
+
+  homeClick() {
+    this.router.navigate(['/']);
+  }
 }

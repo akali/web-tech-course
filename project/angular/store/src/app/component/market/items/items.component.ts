@@ -24,7 +24,10 @@ export class ItemsComponent implements OnInit {
   ngOnInit() {
     this.provider.get_categories().then(categories => {
       this.categories = categories;
-      this.filterCategory = this.categories[0];
+      this.filterCategory = {
+        id: 0,
+        title: 'All'
+      };
     });
     this.filterCategory = null;
     this.provider.get_items().then(items => {
