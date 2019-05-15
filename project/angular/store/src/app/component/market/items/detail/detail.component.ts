@@ -17,6 +17,7 @@ export class DetailComponent implements OnInit {
   private item: Item;
   private comments: Comment[];
   private commentBody: string;
+  authent = true;
 
   constructor(
     private api: ProviderService,
@@ -26,6 +27,11 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (localStorage.token == null) {
+      this.authent = false;
+    }
+
     this.itemId = this.route.snapshot.paramMap.get('id');
     this.api.get_item(Number(this.itemId)).then(item => {
       console.log(item);

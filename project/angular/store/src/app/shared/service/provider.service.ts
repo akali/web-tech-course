@@ -18,7 +18,11 @@ export class ProviderService extends MainService {
   }
 
   public get_categories(): Promise<Category[]> {
-    return this.get(`${this.root}/api/category`, {});
+    return this.get(`${this.root}/api/category`, {}).then(res => res);
+  }
+
+  public get_items_category(category: Category): Promise<Item[]> {
+    return this.get(`${this.root}/api/category/${category.id}/item`, {}).then(res => res);
   }
 
   post_item(item: any): Promise<Item> {

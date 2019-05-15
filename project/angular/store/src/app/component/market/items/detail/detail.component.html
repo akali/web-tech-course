@@ -80,22 +80,24 @@
           </div>
           Comments:
           <ul class="list-group">
-            <div *ngFor="let comment of comments" class="list-group-item">
-              <div class="card">
-                <div class="card-header">
-                  <div class="d-flex align-content-around justify-content-between">
-                    <b>{{comment.author}}</b>
-                    <b>{{comment.post_date}}</b>
+            <div>
+              <div *ngFor="let comment of comments" class="list-group-item">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="d-flex align-content-around justify-content-between">
+                      <b>{{comment.author}}</b>
+                      <b>{{comment.post_date}}</b>
+                    </div>
                   </div>
-                </div>
-                <div class="card-body">
-                  <div class="card-text">
-                    {{comment.description}}
+                  <div class="card-body">
+                    <div class="card-text">
+                      {{comment.description}}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="list-group-item">
+          </div>
+            <div *ngIf="authent" class="list-group-item">
               <div class="card">
                 <div class="card-header">
                   <div class="d-flex align-content-around justify-content-between">

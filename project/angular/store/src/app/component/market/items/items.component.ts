@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderService} from '../../../shared/service/provider.service';
-import {Item} from '../../../shared/model/model';
+import {Category, Item} from '../../../shared/model/model';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -11,6 +11,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ItemsComponent implements OnInit {
 
   private items: Item[];
+  private category: Category;
+  private categories: Category[];
 
   constructor(
     private route: ActivatedRoute,
@@ -20,11 +22,22 @@ export class ItemsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.provider.get_categories().then(categories => {
+      this.categories = categories;
+    });
+    this.category = null;
     this.provider.get_items().then(items => {
       console.log(items);
       this.items = items;
     }).catch(error => {
       console.error(error);
+    });
+  }
+
+  onCategoryClick(category: Category) {
+    this.category = category;
+    this.provider.get_items_category(category).then(items => {
+      this.items = items;
     });
   }
 
